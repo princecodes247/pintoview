@@ -51,4 +51,14 @@ class PostController extends Controller
             'link' => env('APP_URL') . '/' . $request->user()->slug . '/' . $post->short_link,
         ], 201);
     }
+
+    public function update(Request $request, $short_link)
+    {
+        $post = $this->postService->updatePost($request, $short_link);
+        return response()->json([
+            'message' => 'Post updated successfully',
+            'post' => $post,
+            'link' => env('APP_URL') . '/' . $request->user()->slug . '/' . $post->short_link,
+        ], 200);
+    }
 }

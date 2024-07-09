@@ -23,4 +23,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/posts', [PostController::class, 'index']);
     Route::post('/posts', [PostController::class, 'store']);
     Route::get('/posts/{short_link}', [PostController::class, 'show']);
+    Route::put('/posts/{short_link}', [PostController::class, 'update']);
 });

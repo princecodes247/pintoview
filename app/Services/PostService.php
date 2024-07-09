@@ -38,4 +38,20 @@ class PostService
 
         return $post;
     }
+
+    public function updatePost(Request $request, $short_link)
+    {
+        $post = Post::where('short_link', $short_link)->first();
+        if ($request->has('title')) {
+            $post->title = $request->title;
+        }
+        if ($request->has('content')) {
+            $post->content = $request->content;
+        }
+        if ($request->has('password')) {
+            $post->password = $request->password;
+        }
+        $post->save();
+        return $post;
+    }
 }
