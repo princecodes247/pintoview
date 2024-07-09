@@ -7,9 +7,23 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
-                <x-welcome />
+            <h1>Posts</h1>
+            <a href="{{ route('posts.create') }}" class="btn btn-primary">Create Post</a>
+            @foreach ($posts as $post)
+            <div>
+                <br />
+                <br />
+                <h3>{{ $post->title }}</h3>
+                <h3>{{ env('APP_URL') . '/' . $post->short_link }}</h3>
+                <br />
+
+                <p>{{ $post->content }}</p>
+                <br />
+                <br />
+                <br />
+
             </div>
+            @endforeach
         </div>
     </div>
 </x-app-layout>
