@@ -17,10 +17,12 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body>
-    <div class="font-sans text-gray-900 dark:text-gray-100 antialiased">
+<body class="bg-white dark:bg-white">
+  <x-landing.header/>
+    <div class="font-sans text-gray-900 antialiased">
         {{ $slot }}
     </div>
+  <x-landing.footer/>
 </body>
 
 </html>

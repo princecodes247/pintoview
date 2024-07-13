@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.wrapCont li a {
+    text-wrap: wrap;
+    overflow-wrap: break-word;
+}

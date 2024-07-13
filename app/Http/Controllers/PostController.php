@@ -78,7 +78,7 @@ class PostController extends Controller
 
         $post->views++;
         $post->save();
-        return view('posts.show_public', compact('post'));
+        return view('posts.show_public', compact('post', 'user'));
     }
 
     public function checkPassword(Request $request, $short_link)
