@@ -22,9 +22,9 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        $posts = Post::latest()->paginate(10);
-        $viewsOverTime = $this->postService->getViewsOverTime();
-        $topPosts = $this->postService->getTopPosts();
+        $posts = Post::where('user_id', $user->id)->latest()->paginate(10);
+        $viewsOverTime = $this->postService->getViewsOverTime($user->id);
+        $topPosts = $this->postService->getTopPosts($user->id);
         \Illuminate\Support\Facades\Log::info('User viewed dashboard', ['user_id' => $user->id, 'viewsOverTime' => $viewsOverTime, 'topPosts' => $topPosts]);
 
         return view('dashboard', compact('posts', 'user', 'viewsOverTime', 'topPosts'));

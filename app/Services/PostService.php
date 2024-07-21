@@ -55,20 +55,22 @@ class PostService
         return $post;
     }
 
-    public function getViewsOverTime()
+    public function getViewsOverTime($userId)
     {
-        $viewsOverTime = [];
-        $posts = Post::all();
-        foreach ($posts as $post) {
-            $viewsOverTime['labels'][] = $post->created_at->format('F j');
-            $viewsOverTime['data'][] = $post->views;
+        $viewsOverTime = ['labels' => [], 'data' => []];
+        $posts = Post::where('user_id', $userId)->get();
+        if (!$posts->isEmpty()) {
+            foreach ($posts as $post) {
+                $viewsOverTime['labels'][] = $post->created_at->format('F j');
+                $viewsOverTime['data'][] = $post->views;
+            }
         }
         return $viewsOverTime;
     }
 
-    public function getTopPosts()
+    public function getTopPosts($userId)
     {
-        $posts = Post::orderBy('views', 'desc')->take(5)->get();
+        $posts = Post::where('user_id', $userId)->orderBy('views', 'desc')->take(5)->get();
         $topPosts = ['labels' => $posts->pluck('title'), 'data' => $posts->pluck('views')];
         return $topPosts;
     }
