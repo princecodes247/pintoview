@@ -11,38 +11,25 @@
 
         <x-slot name="form">
             <!-- Token Name -->
-            <div class="col-span-6 sm:col-span-4">
-                <x-label for="name" value="{{ __('Token Name') }}" />
-                <x-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="createApiTokenForm.name" autofocus />
-                <x-input-error for="name" class="mt-2" />
-            </div>
-
-            <!-- Token Permissions -->
-            @if (Laravel\Jetstream\Jetstream::hasPermissions())
-            <div class="col-span-6">
-                <x-label for="permissions" value="{{ __('Permissions') }}" />
-
-                <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
-                    @foreach (Laravel\Jetstream\Jetstream::$permissions as $permission)
-                    <label class="flex items-center">
-                        <x-checkbox wire:model.defer="createApiTokenForm.permissions" :value="$permission" />
-                        <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">{{ $permission }}</span>
-                    </label>
-                    @endforeach
+            <div class="w-full flex flex-col col-span-6 gap-2">
+                <div class="">
+                    <x-label for="name" value="{{ __('Token Name') }}" />
+                    <x-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="createApiTokenForm.name" />
+                    <x-input-error for="name" class="mt-2" />
                 </div>
+                <x-action-message class="mr-3" on="created">
+                    {{ __('Created.') }}
+                </x-action-message>
+
+                <x-button class="w-fit">
+                    {{ __('Create') }}
+                </x-button>
+
             </div>
-            @endif
+
         </x-slot>
 
-        <x-slot name="actions">
-            <x-action-message class="mr-3" on="created">
-                {{ __('Created.') }}
-            </x-action-message>
 
-            <x-button>
-                {{ __('Create') }}
-            </x-button>
-        </x-slot>
     </x-form-section>
 
     @if ($this->user->tokens->isNotEmpty())
@@ -52,7 +39,7 @@
     <div class="mt-10 sm:mt-0">
         <x-action-section>
             <x-slot name="title">
-                {{ __('Manage API Tokens') }}
+                {{ __('Existing API Tokens') }}
             </x-slot>
 
             <x-slot name="description">
@@ -75,11 +62,7 @@
                             </div>
                             @endif
 
-                            @if (Laravel\Jetstream\Jetstream::hasPermissions())
-                            <button class="cursor-pointer ml-6 text-sm text-gray-400 underline" wire:click="manageApiTokenPermissions({{ $token->id }})">
-                                {{ __('Permissions') }}
-                            </button>
-                            @endif
+
 
                             <button class="cursor-pointer ml-6 text-sm text-red-500" wire:click="confirmApiTokenDeletion({{ $token->id }})">
                                 {{ __('Delete') }}

@@ -19,10 +19,11 @@ class PostController extends Controller
         $this->postService = $postService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::all();
-        return view('dashboard', compact('posts'));
+        $user = $request->user();
+        $posts = Post::paginate(10);
+        return view('dashboard', compact('posts', 'user'));
     }
 
     public function create()

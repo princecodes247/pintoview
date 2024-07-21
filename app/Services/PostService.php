@@ -11,7 +11,7 @@ class PostService
     public function createPost(Request $request, $userId)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => 'nullable|string|max:255',
             'content' => 'required',
             'password' => 'nullable|string',
             'expiration_time' => 'nullable|date',
@@ -25,7 +25,7 @@ class PostService
 
         $post = new Post();
         $post->user_id = $userId;
-        $post->title = $request->title;
+        $post->title = $request->title ?? \Carbon\Carbon::now()->format('F j');
         $post->content = $request->content;
         $post->password = $request->password;
         $post->expiration_time = $request->expiration_time;

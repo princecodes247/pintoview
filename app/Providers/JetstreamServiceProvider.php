@@ -31,7 +31,12 @@ class JetstreamServiceProvider extends ServiceProvider
      */
     protected function configurePermissions(): void
     {
-        Jetstream::defaultApiTokenPermissions(['post:read']);
+        Jetstream::defaultApiTokenPermissions([
+            'post:create',
+            'post:read',
+            'post:update',
+            'post:delete',
+        ]);
 
         Jetstream::permissions([
             'post:create',

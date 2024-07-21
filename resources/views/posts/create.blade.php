@@ -1,4 +1,19 @@
 <x-app-layout>
+    <style>
+        :root {
+            /* Overrides the border radius setting in the theme. */
+            --ck-border-radius: 4px;
+            --ck-color-base-border: #4b5563;
+            --ck-color-base-background: #1f2937;
+        }
+
+        .ck-editor__editable_inline {
+            min-height: 400px;
+            background: #1f2937;
+            color: #fff;
+        }
+
+    </style>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-200">
             {{ __('Create New Post') }}
@@ -14,7 +29,7 @@
 
                         <div class="mb-4">
                             <label for="title" class="block font-medium text-sm text-gray-300">Title</label>
-                            <input type="text" name="title" id="title" class="w-full p-2 bg-gray-800 border-gray-600 rounded shadow-sm mt-1" value="{{ old('title') }}" required>
+                            <input type="text" name="title" id="title" class="w-full p-2 bg-gray-800 border-gray-600 rounded shadow-sm mt-1" value="{{ old('title') }}">
                             @error('title')
                             <div class="text-red-500 mt-2">{{ $message }}</div>
                             @enderror
@@ -52,44 +67,44 @@
                             @enderror
                         </div>
 
-                        <div class="mb-4">
+                        {{-- <div class="mb-4">
                             <label for="is_hidden" class="block font-medium text-sm text-gray-300">Is Hidden</label>
                             <input type="checkbox" name="is_hidden" id="is_hidden" class="p-2 bg-gray-800 border-gray-600 rounded shadow-sm mt-1" value="1" {{ old('is_hidden') ? 'checked' : '' }}>
-                            @error('is_hidden')
-                            <div class="text-red-500 mt-2">{{ $message }}</div>
-                            @enderror
-                        </div>
+                        @error('is_hidden')
+                        <div class="text-red-500 mt-2">{{ $message }}</div>
+                        @enderror
+                </div> --}}
 
-                        <div class="mb-4">
-                            <label for="hidden_until" class="block font-medium text-sm text-gray-300">Hidden Until (Optional)</label>
-                            <input type="datetime-local" name="hidden_until" id="hidden_until" class="w-full p-2 bg-gray-800 border-gray-600 rounded shadow-sm mt-1" value="{{ old('hidden_until') }}">
-                            @error('hidden_until')
-                            <div class="text-red-500 mt-2">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="template_id" class="block font-medium text-sm text-gray-300">Template (Optional)</label>
-                            <select name="template_id" id="template_id" class="w-full p-2 bg-gray-800 border-gray-600 rounded shadow-sm mt-1">
-                                <option value="">Select a Template</option>
-                                @foreach ($templates as $template)
-                                <option value="{{ $template->id }}" {{ old('template_id') == $template->id ? 'selected' : '' }}>
-                                    {{ $template->name }}
-                                </option>
-                                @endforeach
-                            </select>
-                            @error('template_id')
-                            <div class="text-red-500 mt-2">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="mb-4">
-                            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded" onclick="console.log('Creating post...')">Create Post</button>
-                        </div>
-                    </form>
+                <div class="mb-4">
+                    <label for="hidden_until" class="block font-medium text-sm text-gray-300">Hidden Until (Optional)</label>
+                    <input type="datetime-local" name="hidden_until" id="hidden_until" class="w-full p-2 bg-gray-800 border-gray-600 rounded shadow-sm mt-1" value="{{ old('hidden_until') }}">
+                    @error('hidden_until')
+                    <div class="text-red-500 mt-2">{{ $message }}</div>
+                    @enderror
                 </div>
+
+                <div class="mb-4">
+                    <label for="template_id" class="block font-medium text-sm text-gray-300">Template (Optional)</label>
+                    <select name="template_id" id="template_id" class="w-full p-2 bg-gray-800 border-gray-600 rounded shadow-sm mt-1">
+                        <option value="">Select a Template</option>
+                        @foreach ($templates as $template)
+                        <option value="{{ $template->id }}" {{ old('template_id') == $template->id ? 'selected' : '' }}>
+                            {{ $template->name }}
+                        </option>
+                        @endforeach
+                    </select>
+                    @error('template_id')
+                    <div class="text-red-500 mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-4">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded" onclick="console.log('Creating post...')">Create Post</button>
+                </div>
+                </form>
             </div>
         </div>
+    </div>
     </div>
     <script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/classic/ckeditor.js"></script>
     <script>
@@ -98,5 +113,6 @@
             .catch(error => {
                 console.error(error);
             });
+
     </script>
 </x-app-layout>
