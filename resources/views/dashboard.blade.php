@@ -1,6 +1,10 @@
 <x-app-layout>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
+            {{-- Stats Summary Section --}}
+            <x-stats-summary :viewsOverTime="$viewsOverTime" :topPosts="$topPosts" />
+
             <section class="py-12">
                 <div class="flex items-center justify-between">
                     <x-dashboard-title>My Pins</x-dashboard-title>
@@ -30,7 +34,7 @@
                         @endif
 
                         {{-- Current Page and Total Pages --}}
-                        <span class="px-3">
+                        <span class="px-3 text-white text-sm">
                             Page {{ $posts->currentPage() }} of {{ $posts->lastPage() }}
                         </span>
 

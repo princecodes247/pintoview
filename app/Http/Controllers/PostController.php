@@ -22,8 +22,12 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        $posts = Post::paginate(10);
-        return view('dashboard', compact('posts', 'user'));
+        $posts = Post::latest()->paginate(10);
+        $viewsOverTime = $this->postService->getViewsOverTime();
+        $topPosts = $this->postService->getTopPosts();
+        \Illuminate\Support\Facades\Log::info('User viewed dashboard', ['user_id' => $user->id, 'viewsOverTime' => $viewsOverTime, 'topPosts' => $topPosts]);
+
+        return view('dashboard', compact('posts', 'user', 'viewsOverTime', 'topPosts'));
     }
 
     public function create()

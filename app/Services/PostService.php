@@ -54,4 +54,22 @@ class PostService
         $post->save();
         return $post;
     }
+
+    public function getViewsOverTime()
+    {
+        $viewsOverTime = [];
+        $posts = Post::all();
+        foreach ($posts as $post) {
+            $viewsOverTime['labels'][] = $post->created_at->format('F j');
+            $viewsOverTime['data'][] = $post->views;
+        }
+        return $viewsOverTime;
+    }
+
+    public function getTopPosts()
+    {
+        $posts = Post::orderBy('views', 'desc')->take(5)->get();
+        $topPosts = ['labels' => $posts->pluck('title'), 'data' => $posts->pluck('views')];
+        return $topPosts;
+    }
 }

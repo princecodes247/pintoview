@@ -46,7 +46,7 @@
 
                         @if (Route::has('register'))
                         <div class="hidden sm:flex">
-                            <a class="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-blue-600" href="#">
+                            <a class="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-blue-600" href="{{ route('register') }}">
                                 Register
                             </a>
                         </div>
