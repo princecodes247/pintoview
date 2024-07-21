@@ -100,4 +100,40 @@ class PostController extends Controller
 
         return redirect()->route('posts.show_public', ['short_link' => $post->short_link])->withErrors(['password' => 'Incorrect password.']);
     }
+
+
+    // Show the form for editing the specified resource
+    public function edit($id)
+    {
+        $post = Post::find($id);
+        $templates = Template::all();
+        return view('posts.create', compact('templates', 'post'));
+    }
+
+    // Update the specified resource in storage
+    public function update(Request $request, $id)
+    {
+        $post = Post::find($id);
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'short_link' => 'required|string|unique:posts,short_link,' . $post->id,
+            'password' => 'nullable|string',
+            // Add other fields as necessary
+        ]);
+
+        $post->update($data);
+        return redirect()->route('posts.index');
+    }
+
+    // Remove the specified resource from storage
+    public function destroy($id)
+    {
+        $post = Post::find($id);
+        if ($post) {
+            $post->delete();
+            return redirect()->back()->with('success', 'Post deleted successfully!');
+        } else {
+            return redirect()->back()->with('failure', 'Post not found!');
+        }
+    }
 }
