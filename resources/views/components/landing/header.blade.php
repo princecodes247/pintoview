@@ -43,14 +43,14 @@
                         <a class="rounded-md bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow" href="{{ route('login') }}">
                             Login
                         </a>
-
+{{-- 
                         @if (Route::has('register'))
                         <div class="hidden sm:flex">
                             <a class="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-blue-600" href="{{ route('register') }}">
                                 Register
                             </a>
                         </div>
-                        @endif
+                        @endif --}}
                         @endauth
                     </div>
 

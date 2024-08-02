@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
+use Illuminate\Support\Str;
 use Laravel\Jetstream\Jetstream;
 
 class CreateNewUser implements CreatesNewUsers
@@ -26,9 +27,21 @@ class CreateNewUser implements CreatesNewUsers
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
+        $slug = Str::slug($input['name']);
+
+        $count = 0;
+        $newSlug = $slug;
+        while (User::where('slug', $newSlug)->exists()) {
+            $count++;
+            $newSlug = $slug . '-' . $count;
+        }
+        if ($count > 0) {
+            $slug = $newSlug;
+        }
         return User::create([
             'name' => $input['name'],
             'email' => $input['email'],
+            'slug' => $slug,
             'password' => Hash::make($input['password']),
         ]);
     }
