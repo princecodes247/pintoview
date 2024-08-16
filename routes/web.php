@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\BannerAdController;
+use App\Http\Controllers\ButtonAdController;
+use App\Http\Controllers\EmbedCodeController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +27,19 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/dashboard', [PostController::class, 'index'])->name('dashboard');
+    Route::get('/embeds', [EmbedCodeController::class, 'index'])->name('embeds.index');
+    Route::get('/embeds/api-tokens', [EmbedCodeController::class, 'api'])->name('embeds.api-tokens');
+    Route::post('/embeds', [EmbedCodeController::class, 'store'])->name('embeds.store');
+    Route::delete('/embeds/{id}/destroy', [EmbedCodeController::class, 'destroy'])->name('embed.destroy');
+    Route::get('/banner-ads', [BannerAdController::class, 'index'])->name('banner-ads.index');
+    Route::post('/banner-ads', [BannerAdController::class, 'store'])->name('banner-ads.store');
+    Route::post('/banner-ads/{id}/edit', [BannerAdController::class, 'edit'])->name('banner-ads.edit');
+    Route::delete('/banner-ads/{id}/destroy', [BannerAdController::class, 'destroy'])->name('banner-ads.destroy');
+    Route::get('/banner/{id}', [BannerAdController::class, 'redirectToLink'])->name('banner-ads.redirect');
+    Route::get('/button-ads', [ButtonAdController::class, 'index'])->name('button-ads.index');
+    Route::post('/button-ads', [ButtonAdController::class, 'store'])->name('button-ads.store');
+    Route::post('/button-ads/{id}/pause', [ButtonAdController::class, 'pause'])->name('button-ads.pause');
+    Route::delete('/button-ads/{id}/destroy', [ButtonAdController::class, 'destroy'])->name('button-ads.destroy');
     Route::get('posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::post('posts/store', [PostController::class, 'store'])->name('posts.store');
     Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');

@@ -105,10 +105,7 @@
                 </div>
             </section>
 
-            <section class="py-12">
-                <x-dashboard-title>Developers</x-dashboard-title>
-                @livewire('api-token-manager2')
-            </section>
+      
 
             <section class="py-12">
                 <x-dashboard-title>Affiliate link</x-dashboard-title>

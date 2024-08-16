@@ -13,20 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('button_ads', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('content');
-            $table->string('password')->nullable();
-            $table->timestamp('expiration_time')->nullable();
-            $table->integer('view_limit')->nullable();
-            $table->integer('views')->default(0);
-            $table->boolean('is_hidden')->default(false);
-            $table->timestamp('hidden_until')->nullable();
-            $table->unsignedBigInteger('template_id')->nullable();
-            $table->string('short_link')->unique();
+            $table->enum('placement', ['top', 'bottom']);
+            $table->longText('direct_link')->nullable();
+            $table->boolean('is_paused')->default(false);
             $table->timestamps();
-            
+             
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
@@ -39,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('button_ads');
     }
 };

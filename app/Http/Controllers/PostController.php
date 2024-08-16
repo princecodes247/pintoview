@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BannerAd;
+use App\Models\ButtonAd;
+use App\Models\EmbedCode;
 use App\Models\Post;
 use App\Models\Template;
 use App\Models\User;
@@ -57,6 +60,13 @@ class PostController extends Controller
         if (!$user) {
             return abort(404);
         }
+
+        $embedCodes = EmbedCode::where('user_id', $user->id)->get()->first();
+        $headerBannerAd = BannerAd::where('user_id', $user->id)->where('placement', 'header')->orderBy('created_at', 'desc')->first();
+        $footerBannerAd = BannerAd::where('user_id', $user->id)->where('placement', 'footer')->orderBy('created_at', 'desc')->first();
+        $topButtonAd = ButtonAd::where('user_id', $user->id)->where('placement', 'top')->where('is_paused', false)->orderBy('created_at', 'desc')->first();
+        $bottomButtonAd = ButtonAd::where('user_id', $user->id)->where('placement', 'bottom')->where('is_paused', false)->orderBy('created_at', 'desc')->first();
+
         if (is_null($post)) {
             $post = Post::where('short_link', $short_link)->first();
         }
@@ -83,7 +93,15 @@ class PostController extends Controller
 
         $post->views++;
         $post->save();
-        return view('posts.show_public', compact('post', 'user'));
+        return view('posts.show_public', [
+            'post' => $post,
+            'user' => $user,
+            'embedCodes' => $embedCodes,
+            'headerBannerAd' => $headerBannerAd,
+            'footerBannerAd' => $footerBannerAd,
+            'topButtonAd' => $topButtonAd,
+            'bottomButtonAd' => $bottomButtonAd,
+        ]);
     }
 
     public function checkPassword(Request $request, $short_link)

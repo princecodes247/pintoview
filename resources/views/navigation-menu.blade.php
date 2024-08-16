@@ -100,6 +100,22 @@
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 
+                            <x-dropdown-link href="{{ route('embeds.index') }}">
+                                {{ __('Embed Codes') }}
+                            </x-dropdown-link>
+
+                            <x-dropdown-link href="{{ route('button-ads.index') }}">
+                                {{ __('Button Ads') }}
+                            </x-dropdown-link>
+
+                            <x-dropdown-link href="{{ route('banner-ads.index') }}">
+                                {{ __('Banner Ads') }}
+                            </x-dropdown-link>
+
+                            <x-dropdown-link href="{{ route('api-tokens.index') }}">
+                                {{ __('API Tokens') }}
+                            </x-dropdown-link>
+
                             <div class="border-t border-gray-200 dark:border-gray-600"></div>
 
                             <!-- Authentication -->
