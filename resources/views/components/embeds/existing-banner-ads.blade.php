@@ -39,7 +39,7 @@
                                 <div class="flex space-x-2">
                                     <button 
                                         class="text-sm text-white bg-yellow-500 hover:bg-yellow-600 rounded-md px-3 py-1"
-                                        x-on:click="showModal = true; id = {{ $bannerAd->id }}; title = '{{ $bannerAd->title }}'; directLink = '{{ $bannerAd->direct_link }}'; placement = '{{ $bannerAd->placement }}'; image = '{{ $bannerAd->image }}'; mobileImage = '{{ $bannerAd->mobile_image }}'; link = '{{ route('banner-ads.update', $bannerAd->id) }}'"
+                                        x-on:click="showModal = true; id = {{ $bannerAd->id }}; title = `{{ $bannerAd->title }}`; directLink = `{{ $bannerAd->direct_link }}`; placement = '{{ $bannerAd->placement }}'; image = `{{ $bannerAd->image }}`; mobileImage = `{{ $bannerAd->mobile_image }}`; link = '{{ route('banner-ads.update', $bannerAd->id) }}'"
                                         >
                                         Edit
                                     </button>

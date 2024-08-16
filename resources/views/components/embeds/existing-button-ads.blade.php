@@ -32,7 +32,7 @@
                                 <div class="flex space-x-2">
                                     <button 
                                         class="text-sm text-white bg-yellow-500 hover:bg-yellow-600 rounded-md px-3 py-1"
-                                        x-on:click="showModal = true; id = {{ $buttonAd->id }}; title = '{{ $buttonAd->title }}'; directLink = '{{ $buttonAd->direct_link }}'; placement = '{{ $buttonAd->placement }}'; link = '{{ route('button-ads.update', $buttonAd->id) }}'">
+                                        x-on:click="showModal = true; id = {{ $buttonAd->id }}; title = `{{ $buttonAd->title }}`; directLink = `{{ $buttonAd->direct_link }}`; placement = '{{ $buttonAd->placement }}'; link = '{{ route('button-ads.update', $buttonAd->id) }}'">
                                         Edit
                                     </button>
 

@@ -21,6 +21,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/banner/{id}', [BannerAdController::class, 'redirectToLink'])->name('banner-ads.redirect');
+
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -36,7 +39,6 @@ Route::middleware([
     Route::post('/banner-ads', [BannerAdController::class, 'store'])->name('banner-ads.store');
     Route::put('/banner-ads/{id}/update', [BannerAdController::class, 'update'])->name('banner-ads.update');
     Route::delete('/banner-ads/{id}/destroy', [BannerAdController::class, 'destroy'])->name('banner-ads.destroy');
-    Route::get('/banner/{id}', [BannerAdController::class, 'redirectToLink'])->name('banner-ads.redirect');
     Route::get('/button-ads', [ButtonAdController::class, 'index'])->name('button-ads.index');
     Route::post('/button-ads', [ButtonAdController::class, 'store'])->name('button-ads.store');
     Route::post('/button-ads/{id}/pause', [ButtonAdController::class, 'pause'])->name('button-ads.pause');
