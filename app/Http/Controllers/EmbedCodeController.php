@@ -51,7 +51,6 @@ class EmbedCodeController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'placement' => 'required|in:global,local',
             'content' => 'required|string',
         ]);
 

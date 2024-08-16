@@ -30,15 +30,17 @@ Route::middleware([
     Route::get('/embeds', [EmbedCodeController::class, 'index'])->name('embeds.index');
     Route::get('/embeds/api-tokens', [EmbedCodeController::class, 'api'])->name('embeds.api-tokens');
     Route::post('/embeds', [EmbedCodeController::class, 'store'])->name('embeds.store');
+    Route::put('/embeds/{id}/update', [EmbedCodeController::class, 'update'])->name('embed.update');
     Route::delete('/embeds/{id}/destroy', [EmbedCodeController::class, 'destroy'])->name('embed.destroy');
     Route::get('/banner-ads', [BannerAdController::class, 'index'])->name('banner-ads.index');
     Route::post('/banner-ads', [BannerAdController::class, 'store'])->name('banner-ads.store');
-    Route::post('/banner-ads/{id}/edit', [BannerAdController::class, 'edit'])->name('banner-ads.edit');
+    Route::put('/banner-ads/{id}/update', [BannerAdController::class, 'update'])->name('banner-ads.update');
     Route::delete('/banner-ads/{id}/destroy', [BannerAdController::class, 'destroy'])->name('banner-ads.destroy');
     Route::get('/banner/{id}', [BannerAdController::class, 'redirectToLink'])->name('banner-ads.redirect');
     Route::get('/button-ads', [ButtonAdController::class, 'index'])->name('button-ads.index');
     Route::post('/button-ads', [ButtonAdController::class, 'store'])->name('button-ads.store');
     Route::post('/button-ads/{id}/pause', [ButtonAdController::class, 'pause'])->name('button-ads.pause');
+    Route::put('/button-ads/{id}/update', [ButtonAdController::class, 'update'])->name('button-ads.update');
     Route::delete('/button-ads/{id}/destroy', [ButtonAdController::class, 'destroy'])->name('button-ads.destroy');
     Route::get('posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::post('posts/store', [PostController::class, 'store'])->name('posts.store');

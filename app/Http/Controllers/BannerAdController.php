@@ -54,7 +54,7 @@ class BannerAdController extends Controller
     }
 
     // Update the specified resource in storage.
-    public function update(Request $request, $placement)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'title' => 'required|string|max:255',
@@ -64,8 +64,10 @@ class BannerAdController extends Controller
             'mobile_image' => 'nullable|string|max:255',
         ]);
 
-        BannerAd::updateOrCreate(['placement' => $placement, 'user_id' => auth()->id()], $request->all());
-
+        $bannerAd = BannerAd::where('user_id', auth()->id())->where('id', $id)->first();
+        if ($bannerAd) {
+            $bannerAd->update($request->all());
+        }
         $this->clearCache($request->placement);
 
         return redirect()->route('banner-ads.index')->with('success', 'Banner Ad updated successfully.');
