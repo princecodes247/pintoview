@@ -4,6 +4,8 @@ use App\Http\Controllers\BannerAdController;
 use App\Http\Controllers\ButtonAdController;
 use App\Http\Controllers\EmbedCodeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\TemplateController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,10 +48,16 @@ Route::middleware([
     Route::delete('/button-ads/{id}/destroy', [ButtonAdController::class, 'destroy'])->name('button-ads.destroy');
     Route::get('posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::post('posts/store', [PostController::class, 'store'])->name('posts.store');
+    Route::get('posts/settings', [UserController::class, 'settings'])->name('posts.settings');
+    Route::post('posts/settings/theme', [UserController::class, 'updateTheme'])->name('posts.theme.update');
     Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
     Route::get('posts/{id}/edit', [PostController::class, 'edit'])->name('posts.edit');
     Route::post('posts/{id}/update', [PostController::class, 'update'])->name('posts.update');
     Route::delete('posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
+    Route::post('templates/store', [TemplateController::class, 'store'])->name('templates.store');
+    Route::delete('templates/{template}', [TemplateController::class, 'destroy'])->name('templates.destroy');
+    
+    
 });
 Route::get('/{user_slug}/{short_link}', [PostController::class, 'showPublic'])->name('posts.show_public');
 Route::post('{user_slug}/{short_link}/password', [PostController::class, 'checkPassword'])->name('posts.check_password');

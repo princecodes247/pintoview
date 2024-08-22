@@ -4,7 +4,7 @@
 
 @endsection
 
-<x-guest-layout>
+<x-guest-layout :theme="$user->default_post_theme">
     <div class="container mx-auto p-6 max-w-4xl mt-8">
         @if (isset($headerBannerAd))
             <a href="{{ route('banner-ads.redirect', $headerBannerAd->id) }}" class="max-w-[728px] flex justify-center mx-auto">
@@ -12,8 +12,8 @@
                 <img src="{{ $headerBannerAd->mobile_image }}" alt="{{ $headerBannerAd->title }}" class="object-contain block md:hidden">
             </a>
             @endif
-        <div class="bg-gray-200 p-6 rounded-lg my-8 shadow-lg">
-            <h1 class="text-2xl font-bold leading-tight text-gray-600">{{ $post->title }}</h1>
+        <div class="post-bg p-6 rounded-lg my-8 shadow-lg">
+            <h1 class="text-2xl post-header font-bold leading-tight">{{ $post->title }}</h1>
                 @if($topButtonAd)
                 <div class="flex flex-wrap justify-center gap-4 mt-6">
 
@@ -31,7 +31,7 @@
             <p class="mt-2 text-red-400">Views left: {{ $post->view_limit - $post->views }}</p>
             @endif
 
-            <div class="prose lg:prose-xl w-full wrapCont text-gray-600 mt-6">
+            <div class="prose lg:prose-xl w-full wrapCont post-content mt-6">
                 {!! $post->content !!}
             </div>
   @if($bottomButtonAd)

@@ -1,3 +1,18 @@
+@props(['theme'])
+
+@php
+    $themes = [
+        'light' => 'post--light',
+        'dark' => 'post--dark',
+        'sepia' => 'post--sepia',
+        'forest' => 'post--forest',
+        'ocean' => 'post--ocean',
+        'sunset' => 'post--sunset',
+    ];
+
+    $themeClass = $themes[$theme ?? 'light'];
+@endphp
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -18,8 +33,8 @@
     @yield('scripts')
 </head>
 
-<body>
-    <div class="font-sans text-gray-900 dark:text-gray-100 antialiased">
+<body class="{{ $themeClass }}">
+    <div class="font-sans antialiased">
         {{ $slot }}
     </div>
 </body>

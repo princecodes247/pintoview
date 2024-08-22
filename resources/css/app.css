@@ -2,7 +2,67 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --content-bg-color: #f3f4f6;
+    --content-color: #4b5563;
+    --content-header-color: #4b5563;
+    --highlight-bg-color: #f3f4f6;
+  }
+
 .wrapCont li a {
     text-wrap: wrap;
     overflow-wrap: break-word;
 }
+
+@layer components {
+    .post--light {
+      @apply bg-white text-gray-600;
+    }
+    .post--dark {
+        @apply bg-gray-900 text-gray-300;
+        --content-bg-color: #1f2937;
+      --content-color: #d1d5dc;
+      --content-header-color: #d1d5dc;
+      --highlight-bg-color: #f3f4f6;
+      }
+      .post--sepia {
+        @apply bg-amber-50 text-amber-900;
+        --content-bg-color: #fff3c7;
+      --content-color: #783510;
+      --content-header-color: #783510;
+      --highlight-bg-color: #f3f4f6;
+      }
+      .post--forest {
+        @apply bg-green-900 text-green-100;
+        --content-bg-color: #166534;
+      --content-color: #dcfce8;
+      --content-header-color: #dcfce8;
+      --highlight-bg-color: #f3f4f6;
+      }
+      .post--ocean {
+        @apply bg-blue-900 text-blue-100;
+        --content-bg-color: #1e40b0;
+      --content-color: #dceafe;
+      --content-header-color: #dceafe;
+      --highlight-bg-color: #f3f4f6;
+      }
+      .post--sunset {
+        @apply bg-orange-100 text-orange-800;
+        --content-bg-color: #fed7aa;
+      --content-color: #9a3412;
+      --content-header-color: #9a3412;
+      --highlight-bg-color: #f3f4f6;
+      }
+      
+      .post-bg {
+        background: var(--content-bg-color);
+      }
+
+      .post-header {
+        color: var(--content-header-color);
+      }
+      .post-content {
+        color: var(--content-color);
+      }
+  }
+  

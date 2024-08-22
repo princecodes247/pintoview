@@ -36,6 +36,19 @@ class TemplateController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'content' => 'required|string',
+        ]);
+
+        $template = Template::create([
+            'name' => $request->name,
+            'content' => $request->content,
+            'user_id' => $request->user()->id, // Store the user_id
+        ]);
+
+        return redirect()->back()->with('success', 'Template created successfully.');
+
     }
 
     /**
@@ -78,8 +91,17 @@ class TemplateController extends Controller
      * @param  \App\Models\Template  $template
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Template $template)
+    public function destroy(Request $request, Template $template)
     {
-        //
+
+        if ($request->user()->id !== $template->user_id) {
+            return redirect()->back()->with('error', 'Unauthorized action.');
+        }
+
+        // Delete the template
+        $template->delete();
+
+        // Redirect back with success message
+        return redirect()->back()->with('success', 'Template deleted successfully!');
     }
 }

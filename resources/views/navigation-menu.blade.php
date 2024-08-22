@@ -100,6 +100,10 @@
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 
+                            <x-dropdown-link href="{{ route('posts.settings') }}">
+                                {{ __('Post Settings') }}
+                            </x-dropdown-link>
+                            
                             <x-dropdown-link href="{{ route('embeds.index') }}">
                                 {{ __('Embed Codes') }}
                             </x-dropdown-link>

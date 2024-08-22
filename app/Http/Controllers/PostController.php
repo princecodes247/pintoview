@@ -33,9 +33,10 @@ class PostController extends Controller
         return view('dashboard', compact('posts', 'user', 'viewsOverTime', 'topPosts'));
     }
 
+
     public function create()
     {
-        $templates = Template::all();
+        $templates = Template::where('user_id', auth()->id())->get();
         return view('posts.create', compact('templates'));
     }
 
