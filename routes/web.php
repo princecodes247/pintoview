@@ -53,6 +53,7 @@ Route::middleware([
     Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
     Route::get('posts/{id}/edit', [PostController::class, 'edit'])->name('posts.edit');
     Route::post('posts/{id}/update', [PostController::class, 'update'])->name('posts.update');
+    Route::put('posts/{id}/update', [PostController::class, 'update'])->name('posts.update');
     Route::delete('posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
     Route::post('templates/store', [TemplateController::class, 'store'])->name('templates.store');
     Route::delete('templates/{template}', [TemplateController::class, 'destroy'])->name('templates.destroy');

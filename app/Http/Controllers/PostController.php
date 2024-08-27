@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Services\PostService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
@@ -42,6 +43,17 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
+
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+            'password' => 'nullable|string',
+            'expiration_time' => 'nullable|date',
+            'view_limit' => 'nullable|integer|min:1',
+            'hidden_until' => 'nullable|date',
+            'unlock_after' => 'nullable|integer|min:1',
+        ]);
+
         $post = $this->postService->createPost($request, auth()->id());
         return redirect()->route('posts.show', $post->short_link);
     }
@@ -76,7 +88,7 @@ class PostController extends Controller
         }
 
         if ($post->password && !$request->session()->has('post_' . $post->id . '_access_granted')) {
-            return view('posts.password', compact('post'));
+            return view('posts.password', compact('user', 'post'));
         }
 
         // Decrement view limit if it exists and check if it's still valid
@@ -105,8 +117,13 @@ class PostController extends Controller
         ]);
     }
 
-    public function checkPassword(Request $request, $short_link)
+    public function checkPassword(Request $request, $user_slug, $short_link,)
     {
+        $user = User::where('slug', $user_slug)->first();
+        if (!$user) {
+            return abort(404);
+        }
+
         $post = Post::where('short_link', $short_link)->first();
         if (!$post) {
             return abort(404);
@@ -118,10 +135,10 @@ class PostController extends Controller
 
         if ($request->password === $post->password) {
             $request->session()->put('post_' . $post->id . '_access_granted', true);
-            return redirect()->route('posts.show_public', ['short_link' => $post->short_link]);
+            return redirect()->route('posts.show_public', ['user_slug' => $user->slug, 'short_link' => $post->short_link]);
         }
 
-        return redirect()->route('posts.show_public', ['short_link' => $post->short_link])->withErrors(['password' => 'Incorrect password.']);
+        return redirect()->route('posts.show_public', ['user_slug' => $user->slug, 'short_link' => $post->short_link])->withErrors(['password' => 'Incorrect password.']);
     }
 
 
@@ -139,13 +156,16 @@ class PostController extends Controller
         $post = Post::find($id);
         $data = $request->validate([
             'title' => 'required|string|max:255',
-            'short_link' => 'required|string|unique:posts,short_link,' . $post->id,
+            'content' => 'required|string',
             'password' => 'nullable|string',
-            // Add other fields as necessary
+            'expiration_time' => 'nullable|date',
+            'view_limit' => 'nullable|integer|min:1',
+            'hidden_until' => 'nullable|date',
+            'unlock_after' => 'nullable|integer|min:1',
         ]);
 
         $post->update($data);
-        return redirect()->route('posts.index');
+        return redirect()->route('dashboard');
     }
 
     // Remove the specified resource from storage
