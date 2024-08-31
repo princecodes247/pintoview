@@ -73,7 +73,7 @@
                             <tr class="border-b border-gray-700 text-sm bg-gray-800/50 hover:bg-gray-800 cursor-pointer">
                                 <td class="pl-4 py-2">{{ $post->title }}</td>
                                 <td class="pl-4 py-2">
-                                    <a href="{{  route('posts.show_public', ['user_slug' => $user->slug, 'short_link' => $post->short_link]) }}" class="text-blue-500 hover:text-blue-700">
+                                    <a href="{{  route('posts.show_public', ['user_slug' => $user->slug, 'short_link' => $post->short_link]) }}" class="text-blue-500 hover:text-blue-700" target="_blank">
                                         {{ '/' . $post->short_link }}
                                     </a>
                                 </td>
@@ -84,7 +84,7 @@
                                     <p>{{ $post->views }}</p>
                                 </td>
                                 <td class="pl-4 py-2 flex space-x-2">
-                                    <a href="{{ route('posts.show_public', ['user_slug' => $user->slug, 'short_link' => $post->short_link]) }}" class="text-blue-500 hover:text-blue-700">
+                                    <a href="{{ route('posts.show_public', ['user_slug' => $user->slug, 'short_link' => $post->short_link]) }}" class="text-blue-500 hover:text-blue-700" target="_blank">
                                         <i class="fas fa-eye"></i>
                                     </a>
                                     <a href="{{ route('posts.edit', $post) }}" class="text-yellow-500 hover:text-yellow-700">
@@ -105,7 +105,7 @@
                 </div>
             </section>
 
-      
+
 
             <section class="py-12">
                 <x-dashboard-title>Affiliate link</x-dashboard-title>

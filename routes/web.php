@@ -49,16 +49,17 @@ Route::middleware([
     Route::get('posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::post('posts/store', [PostController::class, 'store'])->name('posts.store');
     Route::get('posts/settings', [UserController::class, 'settings'])->name('posts.settings');
-    Route::post('posts/settings/theme', [UserController::class, 'updateTheme'])->name('posts.theme.update');
-    Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
+    Route::post('posts/settings', [UserController::class, 'updateSettings'])->name('posts.settings.update');
+    // Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
     Route::get('posts/{id}/edit', [PostController::class, 'edit'])->name('posts.edit');
     Route::post('posts/{id}/update', [PostController::class, 'update'])->name('posts.update');
     Route::put('posts/{id}/update', [PostController::class, 'update'])->name('posts.update');
     Route::delete('posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
     Route::post('templates/store', [TemplateController::class, 'store'])->name('templates.store');
     Route::delete('templates/{template}', [TemplateController::class, 'destroy'])->name('templates.destroy');
-    
-    
+    Route::post('/profile',  [UserController::class, 'update'])->name('profile.update');
 });
+Route::get('/{user_slug}',  [UserController::class, 'profile'])->name('user.profile_public');
+
 Route::get('/{user_slug}/{short_link}', [PostController::class, 'showPublic'])->name('posts.show_public');
 Route::post('{user_slug}/{short_link}/password', [PostController::class, 'checkPassword'])->name('posts.check_password');

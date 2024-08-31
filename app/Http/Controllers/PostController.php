@@ -43,19 +43,34 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-
+        $userId = auth()->id();
         $data = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
+            'short_link' => [
+                'nullable',
+                'string',
+                'max:255',
+                Rule::unique('posts', 'short_link')->where(function ($query) use ($userId) {
+                    return $query->where('user_id', $userId);
+                })
+            ],
             'password' => 'nullable|string',
             'expiration_time' => 'nullable|date',
             'view_limit' => 'nullable|integer|min:1',
             'hidden_until' => 'nullable|date',
             'unlock_after' => 'nullable|integer|min:1',
+            'unlock_price' => 'nullable|integer|min:1',
         ]);
 
+
+        $user = User::where('id', auth()->id())->first();
+        if (!$user) {
+            return abort(404);
+        }
+
         $post = $this->postService->createPost($request, auth()->id());
-        return redirect()->route('posts.show', $post->short_link);
+        return redirect()->route('posts.show_public', ['user_slug' => $user->slug, 'short_link' => $post->short_link]);
     }
 
     public function show($short_link)
@@ -153,15 +168,25 @@ class PostController extends Controller
     // Update the specified resource in storage
     public function update(Request $request, $id)
     {
+        $userId = auth()->id();
         $post = Post::find($id);
         $data = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
+            'short_link' => [
+                'nullable',
+                'string',
+                'max:255',
+                Rule::unique('posts', 'short_link')->ignore($post->id)->where(function ($query) use ($userId) {
+                    return $query->where('user_id', $userId);
+                })
+            ],
             'password' => 'nullable|string',
             'expiration_time' => 'nullable|date',
             'view_limit' => 'nullable|integer|min:1',
             'hidden_until' => 'nullable|date',
             'unlock_after' => 'nullable|integer|min:1',
+            'unlock_price' => 'nullable|integer|min:1',
         ]);
 
         $post->update($data);

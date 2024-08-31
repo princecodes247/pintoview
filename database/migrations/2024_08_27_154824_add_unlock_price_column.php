@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('posts', function (Blueprint $table) {
             //
-            $table->string('default_post_theme')->default('light');
+            $table->integer('unlock_price')->nullable();
+
         });
     }
 
@@ -26,9 +27,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('posts', function (Blueprint $table) {
             //
-            $table->dropColumn('default_post_theme');
+            $table->dropColumn('unlock_price');
         });
     }
 };

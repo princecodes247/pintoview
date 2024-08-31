@@ -139,8 +139,9 @@
                 @enderror
             </div>
 
-            <div class="mb-4">
+            <div class="mb-4 flex gap-2">
                 <button type="submit">Submit</button>
+                <button type="button" class="bg-green-600 hover:bg-green-700">Unlock it!</button>
             </div>
         </form>
     </div>

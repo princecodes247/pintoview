@@ -33,7 +33,7 @@ class PostService
         $post->is_hidden = $request->is_hidden ?? false;
         $post->hidden_until = $request->hidden_until;
         $post->template_id = $request->template_id;
-        $post->short_link = Str::random(6);
+        $post->short_link = $request->input('slug') ? Str::slug($request->input('slug')) : Str::random(6);
         $post->save();
 
         return $post;

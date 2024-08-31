@@ -28,6 +28,11 @@ class User extends Authenticatable
         'slug',
         'email',
         'password',
+        'facebook',
+        'twitter',
+        'whatsapp',
+        'telegram',
+        'custom_domain'
     ];
 
     /**
