@@ -12,6 +12,9 @@ class BannerAdController extends Controller
     // Display a listing of the resource.
     public function index()
     {
+        if (!auth()->user()->isPremium()) {
+            return redirect()->route('pricing.index');
+        } 
         $bannerAds = BannerAd::all();
         return view('banner-ads.index', compact('bannerAds'));
     }
@@ -19,6 +22,9 @@ class BannerAdController extends Controller
     // Show the form for creating a new resource.
     public function create()
     {
+        if (!auth()->user()->isPremium()) {
+            return redirect()->route('pricing.index');
+        } 
         return view('banner-ads.create');
     }
 
@@ -32,6 +38,10 @@ class BannerAdController extends Controller
             'image' => 'required|url|max:255',
             'mobile_image' => 'nullable|url|max:255',
         ]);
+
+        if (!auth()->user()->isPremium()) {
+            return redirect()->route('pricing.index');
+        } 
 
         // Delete the previous banner in that placement
         BannerAd::where('user_id', auth()->id())->where('placement', $request->placement)->delete();
@@ -49,6 +59,9 @@ class BannerAdController extends Controller
     // Show the form for editing the specified resource.
     public function edit($id)
     {
+        if (!auth()->user()->isPremium()) {
+            return redirect()->route('pricing.index');
+        } 
         $bannerAd = BannerAd::where('user_id', auth()->id())->findOrFail($id);
         return view('banner-ads.edit', compact('bannerAd'));
     }
@@ -63,7 +76,9 @@ class BannerAdController extends Controller
             'image' => 'required|string|max:255',
             'mobile_image' => 'nullable|string|max:255',
         ]);
-
+        if (!auth()->user()->isPremium()) {
+            return redirect()->route('pricing.index');
+        } 
         $bannerAd = BannerAd::where('user_id', auth()->id())->where('id', $id)->first();
         if ($bannerAd) {
             $bannerAd->update($request->all());
@@ -90,6 +105,9 @@ class BannerAdController extends Controller
     // Remove the specified resource from storage.
     public function destroy($id)
     {
+        if (!auth()->user()->isPremium()) {
+            return redirect()->route('pricing.index');
+        } 
         $bannerAd = BannerAd::where('user_id', auth()->id())->findOrFail($id);
         $bannerAd->delete();
 

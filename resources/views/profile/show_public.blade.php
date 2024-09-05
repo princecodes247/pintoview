@@ -1,24 +1,21 @@
 @section('title'){{ $user->name }} Profile @endsection
 
 <x-guest-layout :theme="$user->default_post_theme">
-    <div class="container mx-auto p-4">
-        <div class="bg-white p-6 rounded-lg shadow-lg">
+    <div class="container mx-auto p-4 max-w-lg">
+        <div class="post-bg p-6 rounded-lg shadow text-center">
             <!-- Profile Information -->
-            <div class="flex items-center mb-4">
-                <img src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}" class="rounded-full h-24 w-24 object-cover mr-4">
-                <div>
-                    <h1 class="text-2xl font-bold">{{ $user->name }}</h1>
-                    <p class="text-gray-600">{{ $user->email }}</p>
-                </div>
+            <div class="mb-6">
+                <img src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}" class="rounded-full h-24 w-24 object-cover mx-auto mb-4">
+                <h1 class="text-2xl font-bold">{{ $user->name }}</h1>
+                <p class="text-gray-600">{{ $user->email }}</p>
             </div>
 
             <!-- Social Links -->
             <div class="mt-6">
-                <h2 class="text-xl font-semibold mb-2">{{ __('Social Links') }}</h2>
-                <ul class="list-none">
+                <ul class="list-none space-y-3">
                     @if($user->facebook)
                     <li>
-                        <a href="{{ $user->facebook }}" target="_blank" class="text-blue-600 hover:underline">
+                        <a href="{{ $user->facebook }}" target="_blank" class="block text-white bg-blue-600 rounded-lg px-4 py-2 hover:bg-blue-700">
                             {{ __('Facebook') }}
                         </a>
                     </li>
@@ -26,7 +23,7 @@
 
                     @if($user->twitter)
                     <li>
-                        <a href="{{ $user->twitter }}" target="_blank" class="text-blue-400 hover:underline">
+                        <a href="{{ $user->twitter }}" target="_blank" class="block text-white bg-blue-400 rounded-lg px-4 py-2 hover:bg-blue-500">
                             {{ __('Twitter') }}
                         </a>
                     </li>
@@ -34,7 +31,7 @@
 
                     @if($user->whatsapp)
                     <li>
-                        <a href="{{ $user->whatsapp }}" target="_blank" class="text-green-600 hover:underline">
+                        <a href="{{ $user->whatsapp }}" target="_blank" class="block text-white bg-green-600 rounded-lg px-4 py-2 hover:bg-green-700">
                             {{ __('WhatsApp') }}
                         </a>
                     </li>
@@ -42,7 +39,7 @@
 
                     @if($user->telegram)
                     <li>
-                        <a href="{{ $user->telegram }}" target="_blank" class="text-blue-500 hover:underline">
+                        <a href="{{ $user->telegram }}" target="_blank" class="block text-white bg-blue-500 rounded-lg px-4 py-2 hover:bg-blue-600">
                             {{ __('Telegram') }}
                         </a>
                     </li>
@@ -53,29 +50,26 @@
             <!-- Custom Domain -->
             @if($user->custom_domain)
             <div class="mt-6">
-                <h2 class="text-xl font-semibold mb-2">{{ __('Custom Domain') }}</h2>
-                <p>
-                    <a href="{{ $user->custom_domain }}" target="_blank" class="text-indigo-600 hover:underline">
-                        {{ $user->custom_domain }}
-                    </a>
-                </p>
+                <a href="{{ $user->custom_domain }}" target="_blank" class="block text-white bg-indigo-600 rounded-lg px-4 py-2 hover:bg-indigo-700">
+                    {{ __('Visit My Website') }}
+                </a>
             </div>
             @endif
         </div>
 
         <!-- Free Posts -->
-        <div class="mt-8">
+        <div class="mt-8 post-bg p-6 rounded-lg shadow">
             <h2 class="text-xl font-semibold mb-4">{{ __('Free Posts') }}</h2>
             @if($freePosts->isEmpty())
             <p class="text-gray-600">{{ __('No free posts available.') }}</p>
             @else
-            <ul class="list-none">
+            <ul class="list-none space-y-3">
                 @foreach($freePosts as $post)
-                <li class="mb-4">
-                    <a href="{{ route('posts.show_public',  ['user_slug' => $user->slug, 'short_link' => $post->short_link]) }}" class="text-indigo-600 hover:underline">
+                <li>
+                    <a href="{{ route('posts.show_public',  ['user_slug' => $user->slug, 'short_link' => $post->short_link]) }}" class="block text-indigo-600 hover:underline">
                         {{ $post->title }}
                     </a>
-                    <p class="text-gray-600 text-sm">{{ $post->created_at->format('M d, Y') }}</p>
+                    <p class="text-gray-500 text-sm">{{ $post->created_at->format('M d, Y') }}</p>
                 </li>
                 @endforeach
             </ul>
@@ -83,18 +77,18 @@
         </div>
 
         <!-- Locked Posts -->
-        <div class="mt-8">
+        <div class="mt-8 post-bg p-6 rounded-lg shadow">
             <h2 class="text-xl font-semibold mb-4">{{ __('Locked Posts') }}</h2>
             @if($lockedPosts->isEmpty())
             <p class="text-gray-600">{{ __('No locked posts available.') }}</p>
             @else
-            <ul class="list-none">
+            <ul class="list-none space-y-3">
                 @foreach($lockedPosts as $post)
-                <li class="mb-4">
-                    <a href="{{ route('posts.show_public',  ['user_slug' => $user->slug, 'short_link' => $post->short_link]) }}" class="text-red-600 hover:underline">
+                <li>
+                    <a href="{{ route('posts.show_public',  ['user_slug' => $user->slug, 'short_link' => $post->short_link]) }}" class="block text-red-600 hover:underline">
                         {{ $post->title }}
                     </a>
-                    <p class="text-gray-600 text-sm">{{ $post->created_at->format('M d, Y') }}</p>
+                    <p class="text-gray-500 text-sm">{{ $post->created_at->format('M d, Y') }}</p>
                 </li>
                 @endforeach
             </ul>

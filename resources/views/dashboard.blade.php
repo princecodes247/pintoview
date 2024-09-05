@@ -1,6 +1,7 @@
 <x-app-layout>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+               <x-trial-alert/>
 
             {{-- Stats Summary Section --}}
             <x-stats-summary :viewsOverTime="$viewsOverTime" :topPosts="$topPosts" />

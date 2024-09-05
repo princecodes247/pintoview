@@ -69,7 +69,7 @@ class PostController extends Controller
             return abort(404);
         }
 
-        $post = $this->postService->createPost($request, auth()->id());
+        $post = $this->postService->createPost($request, auth()->user());
         return redirect()->route('posts.show_public', ['user_slug' => $user->slug, 'short_link' => $post->short_link]);
     }
 

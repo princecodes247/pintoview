@@ -103,6 +103,10 @@
                             <x-dropdown-link href="{{ route('posts.settings') }}">
                                 {{ __('Post Settings') }}
                             </x-dropdown-link>
+
+                            <x-dropdown-link href="{{ route('subscription.index') }}">
+                                {{ __('Subscriptions') }}
+                            </x-dropdown-link>
                             
                             <x-dropdown-link href="{{ route('embeds.index') }}">
                                 {{ __('Embed Codes') }}

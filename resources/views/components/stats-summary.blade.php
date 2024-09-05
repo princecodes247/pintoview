@@ -1,5 +1,5 @@
-<div class="py-12">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+<div class="pt-1 py-12">
+    <div class="max-w-7xl mx-auto ">
         <section class="py-12">
             <x-dashboard-title>Analytics</x-dashboard-title>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -28,11 +29,14 @@ class User extends Authenticatable
         'slug',
         'email',
         'password',
+        'role', 
         'facebook',
         'twitter',
         'whatsapp',
         'telegram',
-        'custom_domain'
+        'custom_domain',
+        'has_completed_onboarding',
+        'eligible_for_trial',
     ];
 
     /**
@@ -64,4 +68,37 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function isPremium()
+    {
+        // Check if the user has an active subscription with the plan name 'premium'
+        $activeSubscription = $this->subscriptions()
+            ->where('plan_name', 'premium')
+            ->where('ends_at', '>', now())
+            ->latest('ends_at')
+            ->first();
+    
+        return !is_null($activeSubscription);
+    }
+    
+    
+    public function isSubscriptionActive()
+    {
+        $activeSubscription = $this->subscriptions()
+            ->where('ends_at', '>', Carbon::now())
+            ->latest('ends_at')
+            ->first();
+
+        return !is_null($activeSubscription);
+    }
+
+    /**
+     * Relationship: User has many subscriptions.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class);
+    }
 }

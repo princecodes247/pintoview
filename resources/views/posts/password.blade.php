@@ -129,7 +129,7 @@
      <div class="container">
         <h1>{{ $post->title }}</h1>
 
-        <form action="{{ route('posts.check_password', ['user_slug' => $user->slug, 'short_link' => $post->short_link]) }}" method="POST">
+        <form action="{{ route('posts.check_password', ['user_slug' => $user->slug, 'short_link' => $post->short_link]) }}" class="post-bg" method="POST">
             @csrf
             <div class="mb-4">
                 <label for="password" class="block font-medium text-sm text-gray-300">Password</label>

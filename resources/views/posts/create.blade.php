@@ -103,6 +103,7 @@
                             @enderror
                         </div>
 
+                    @if(auth()->user()->isPremium())
                         <!-- Custom Slug -->
                         <div class="mb-4">
                             <label for="slug" class="block font-medium text-sm text-gray-300">Custom Slug (Optional)</label>
@@ -112,7 +113,7 @@
                             <div class="text-red-500 mt-2">{{ $message }}</div>
                             @enderror
                         </div>
-
+                    @endif
                         <!-- Content -->
                         <div class="mb-4">
                             <label for="content" class="block font-medium text-sm text-gray-300">Content</label>

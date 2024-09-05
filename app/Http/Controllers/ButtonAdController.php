@@ -12,6 +12,9 @@ class ButtonAdController extends Controller
     // Display a listing of the resource.
     public function index()
     {
+        if (!auth()->user()->isPremium()) {
+            return redirect()->route('pricing.index');
+        } 
         $buttonAds = ButtonAd::all();
         return view('button-ads.index', compact('buttonAds'));
     }
@@ -19,6 +22,9 @@ class ButtonAdController extends Controller
     // Show the form for creating a new resource.
     public function create()
     {
+        if (!auth()->user()->isPremium()) {
+            return redirect()->route('pricing.index');
+        } 
         return view('button-ads.create');
     }
 
@@ -31,7 +37,9 @@ class ButtonAdController extends Controller
             'direct_link' => 'required|url',
             'is_paused' => 'boolean',
         ]);
-
+        if (!auth()->user()->isPremium()) {
+            return redirect()->route('pricing.index');
+        } 
         ButtonAd::where('user_id', auth()->id())->where('placement', $request->placement)->delete();
 
         ButtonAd::create(array_merge($request->all(), ['user_id' => auth()->id()]));
@@ -44,6 +52,9 @@ class ButtonAdController extends Controller
     // Show the form for editing the specified resource.
     public function edit($id)
     {
+        if (!auth()->user()->isPremium()) {
+            return redirect()->route('pricing.index');
+        } 
         $buttonAd = ButtonAd::findOrFail($id);
         return view('button-ads.edit', compact('buttonAd'));
     }
@@ -68,6 +79,9 @@ class ButtonAdController extends Controller
             'direct_link' => 'url',
             'is_paused' => 'boolean',
         ]);
+        if (!auth()->user()->isPremium()) {
+            return redirect()->route('pricing.index');
+        } 
 
         $buttonAd = ButtonAd::findOrFail($id);
         $buttonAd->update($request->all());
@@ -80,6 +94,9 @@ class ButtonAdController extends Controller
     // Remove the specified resource from storage.
     public function destroy($id)
     {
+        if (!auth()->user()->isPremium()) {
+            return redirect()->route('pricing.index');
+        } 
         $buttonAd = ButtonAd::findOrFail($id);
         $buttonAd->delete();
 

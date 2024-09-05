@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 class PostService
 {
-    public function createPost(Request $request, $userId)
+    public function createPost(Request $request, $user)
     {
         $request->validate([
             'title' => 'nullable|string|max:255',
@@ -21,10 +21,10 @@ class PostService
             'template_id' => 'nullable|exists:templates,id',
         ]);
 
-        \Illuminate\Support\Facades\Log::info('User creating post:', ['user_id' => $userId]);
+        \Illuminate\Support\Facades\Log::info('User creating post:', ['user_id' => $user->id]);
 
         $post = new Post();
-        $post->user_id = $userId;
+        $post->user_id = $user->id;
         $post->title = $request->title ?? \Carbon\Carbon::now()->format('F j');
         $post->content = $request->content;
         $post->password = $request->password;
@@ -33,7 +33,7 @@ class PostService
         $post->is_hidden = $request->is_hidden ?? false;
         $post->hidden_until = $request->hidden_until;
         $post->template_id = $request->template_id;
-        $post->short_link = $request->input('slug') ? Str::slug($request->input('slug')) : Str::random(6);
+        $post->short_link = $user->isPremium() && $request->input('slug') ? Str::slug($request->input('slug')) : Str::random(6);
         $post->save();
 
         return $post;

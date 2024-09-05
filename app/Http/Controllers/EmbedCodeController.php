@@ -11,8 +11,8 @@ class EmbedCodeController extends Controller
 {
     public function index()
     {
-        $embedCodes = EmbedCode::where('user_id', auth()->id());
-        return view('embeds.show', compact('embedCodes'));
+            $embedCodes = EmbedCode::where('user_id', auth()->id());
+            return view('embeds.show', compact('embedCodes'));
     }
 
     public function api()
@@ -22,7 +22,8 @@ class EmbedCodeController extends Controller
 
     public function create()
     {
-        return view('embed-codes.create');
+            return view('embed-codes.create');
+
     }
 
     public function store(Request $request)
@@ -31,6 +32,7 @@ class EmbedCodeController extends Controller
             'title' => 'required|string|max:255',
             'content' => 'required|string',
         ]);
+
 
         EmbedCode::where('user_id', auth()->id())->delete();
 

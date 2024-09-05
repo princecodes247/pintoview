@@ -17,7 +17,8 @@
                     </p>
                 </a>
                 <h1 class="text-center max-w-md md:max-w-3xl text-3xl md:text-4xl tracking-tighter mr-auto lg:text-6xl font-geist  font-normal  text-transparent bg-clip-text bg-[linear-gradient(180deg,_#000_0%,_rgba(255,_255,_255,_0.00)_202.08%)] leading-0 md:leading-0 md:pb-0 mt-1">
-                    Create pages that you can monetize Instantly
+                    {{-- Create pages that you can monetize Instantly --}}
+                    Create pages you can instantly monetize
                 </h1>
                 {{-- <p class="text-center">
                     Sed ut perspiciatis unde omnis iste natus voluptatem accusantium
