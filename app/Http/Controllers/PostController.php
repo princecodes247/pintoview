@@ -54,7 +54,7 @@ class PostController extends Controller
         
         // Check if the user already has 3 posts and no active subscription
         if ($user->posts()->count() >= 3 && !$subscription) {
-            return redirect()->route('subscriptions.index')->with('error', 'You need to subscribe to create more than 3 posts.');
+            return redirect()->route('subscription.index')->with('error', 'You need to subscribe to create more than 3 posts.');
         }
     
         // Validate the request data

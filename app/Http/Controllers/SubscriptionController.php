@@ -112,7 +112,7 @@ class SubscriptionController extends Controller
     public function startPremium()
     {
         $user = User::where('id', auth()->id())->firstOrFail();
-        $subscription = $this->createSubscription('Premium', 1, $user->id);
+        $subscription = $this->createSubscription('Premium', 12, $user->id);
 
         if (!$subscription) {
             return redirect()->route('subscription.index')->with('error', 'You already have an active subscription.');

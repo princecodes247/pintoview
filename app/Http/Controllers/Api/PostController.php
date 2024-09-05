@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Models\User;
 use App\Services\PostService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -41,7 +42,13 @@ class PostController extends Controller
     public function store(Request $request)
     {
 
-        $post = $this->postService->createPost($request, $request->user()->id);
+
+        $user = User::where('id', $request->user()->id)->first();
+        if (!$user) {
+            return abort(404);
+        }
+
+        $post = $this->postService->createPost($request, $user);
 
         Log::info($request->user());
 
@@ -54,6 +61,11 @@ class PostController extends Controller
 
     public function update(Request $request, $short_link)
     {
+        $user = User::where('id', $request->user()->id)->first();
+        if (!$user) {
+            return abort(404);
+        }
+
         $post = $this->postService->updatePost($request, $short_link);
         return response()->json([
             'message' => 'Post updated successfully',
