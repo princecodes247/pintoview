@@ -51,7 +51,7 @@ Route::middleware([
     Route::get('/subscriptions', [SubscriptionController::class, 'index'])->name('subscription.index');
     Route::post('/pay', [SubscriptionController::class, 'redirectToGateway'])->name('subscriptions.pay');
     Route::get('/payment/callback', [SubscriptionController::class, 'handleGatewayCallback'])->name('payment.callback');
-    Route::post('/subscriptions', [SubscriptionController::class, 'store'])->name('subscriptions.store');
+    Route::post('/subscriptions', [SubscriptionController::class, 'startPremium'])->name('subscriptions.store');
     Route::post('/subscriptions/start-trial', [SubscriptionController::class, 'startTrial'])->name('subscriptions.start-trial');
     Route::post('/subscriptions/{subscription}/cancel', [SubscriptionController::class, 'cancel'])->name('subscriptions.cancel');
 
@@ -85,7 +85,7 @@ Route::middleware([
 
 ])->group(function () {
     Route::get('/{user_slug}',  [UserController::class, 'profile'])->name('user.profile_public');
+});
 
     Route::get('/{user_slug}/{short_link}', [PostController::class, 'showPublic'])->name('posts.show_public');
     Route::post('{user_slug}/{short_link}/password', [PostController::class, 'checkPassword'])->name('posts.check_password');
-});

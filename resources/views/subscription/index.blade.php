@@ -69,9 +69,11 @@
                         <div>
                             <p class="text-gray-900 dark:text-white font-semibold">{{ $subscription->plan_name }}</p>
                             <p class="text-gray-600 dark:text-gray-400 text-sm">
-                                {{ __('Subscribed on: ') }}{{ $subscription->created_at->format('M d, Y') }}
+                                {{ __('Subscribed on: ') }}{{ $subscription->created_at->format('M d, Y') }}<br>
                                 @if(!$subscription->isActive())
                                 <span class="text-red-500">{{ __('(Expired)') }}</span>
+                                @else
+                                {{ __('Expires at: ') }}{{ $subscription->ends_at->format('M d, Y') }}
                                 @endif
                             </p>
                         </div>

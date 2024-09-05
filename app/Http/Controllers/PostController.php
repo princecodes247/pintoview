@@ -40,10 +40,24 @@ class PostController extends Controller
         $templates = Template::where('user_id', auth()->id())->get();
         return view('posts.create', compact('templates'));
     }
-
     public function store(Request $request)
     {
-        $userId = auth()->id();
+        $user = auth()->user();
+    
+        // Check if the user exists
+        if (!$user) {
+            return abort(404);
+        }
+    
+        // Check if the user has an active subscription
+        $subscription = $user->subscriptions()->where('ends_at', '>', now())->first();
+        
+        // Check if the user already has 3 posts and no active subscription
+        if ($user->posts()->count() >= 3 && !$subscription) {
+            return redirect()->route('subscriptions.index')->with('error', 'You need to subscribe to create more than 3 posts.');
+        }
+    
+        // Validate the request data
         $data = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
@@ -51,8 +65,8 @@ class PostController extends Controller
                 'nullable',
                 'string',
                 'max:255',
-                Rule::unique('posts', 'short_link')->where(function ($query) use ($userId) {
-                    return $query->where('user_id', $userId);
+                Rule::unique('posts', 'short_link')->where(function ($query) use ($user) {
+                    return $query->where('user_id', $user->id);
                 })
             ],
             'password' => 'nullable|string',
@@ -62,17 +76,17 @@ class PostController extends Controller
             'unlock_after' => 'nullable|integer|min:1',
             'unlock_price' => 'nullable|integer|min:1',
         ]);
-
-
-        $user = User::where('id', auth()->id())->first();
-        if (!$user) {
-            return abort(404);
-        }
-
-        $post = $this->postService->createPost($request, auth()->user());
-        return redirect()->route('posts.show_public', ['user_slug' => $user->slug, 'short_link' => $post->short_link]);
+    
+        // Create the post using the post service
+        $post = $this->postService->createPost($request, $user);
+    
+        // Redirect to the public view of the post
+        return redirect()->route('posts.show_public', [
+            'user_slug' => $user->slug,
+            'short_link' => $post->short_link,
+        ])->with('success', 'Post created successfully.');
     }
-
+    
     public function show($short_link)
     {
         $post = Post::where('short_link', $short_link)->first();
@@ -88,39 +102,50 @@ class PostController extends Controller
         if (!$user) {
             return abort(404);
         }
-
-        $embedCodes = EmbedCode::where('user_id', $user->id)->get()->first();
+    
+        // Retrieve user's posts sorted by oldest first
+        $userPosts = Post::where('user_id', $user->id)
+            ->orderBy('created_at', 'asc')
+            ->get();
+    
+        // Check if user is on a free plan and restrict to only the 3 oldest posts
+        if (!$user->isPremium() && $userPosts->count() > 3) {
+            $allowedPosts = $userPosts->take(3)->pluck('id')->toArray();
+    
+            // If the post is not one of the 3 oldest, show the subscription expired page
+            if (!in_array($post->id ?? Post::where('short_link', $short_link)->first()->id, $allowedPosts)) {
+                return view('subscription.expired')->with('error', 'You need a premium subscription to access more than 3 posts.');
+            }
+        }
+    
+        $embedCodes = EmbedCode::where('user_id', $user->id)->first();
         $headerBannerAd = BannerAd::where('user_id', $user->id)->where('placement', 'header')->orderBy('created_at', 'desc')->first();
         $footerBannerAd = BannerAd::where('user_id', $user->id)->where('placement', 'footer')->orderBy('created_at', 'desc')->first();
         $topButtonAd = ButtonAd::where('user_id', $user->id)->where('placement', 'top')->where('is_paused', false)->orderBy('created_at', 'desc')->first();
         $bottomButtonAd = ButtonAd::where('user_id', $user->id)->where('placement', 'bottom')->where('is_paused', false)->orderBy('created_at', 'desc')->first();
-
+    
         if (is_null($post)) {
             $post = Post::where('short_link', $short_link)->first();
         }
         if (!$post) {
             return abort(404);
         }
-
+    
         if ($post->password && !$request->session()->has('post_' . $post->id . '_access_granted')) {
             return view('posts.password', compact('user', 'post'));
         }
-
-        // Decrement view limit if it exists and check if it's still valid
-        if ($post->view_limit !== null) {
-
-            if ($post->view_limit <= $post->views) {
-                abort(403, 'This post has reached its view limit.');
-            }
+    
+        if ($post->view_limit !== null && $post->view_limit <= $post->views) {
+            abort(403, 'This post has reached its view limit.');
         }
-
+    
         // Check expiration time
         if ($post->expiration_time && now()->isAfter($post->expiration_time)) {
             abort(403, 'This post has expired.');
         }
-
-        $post->views++;
-        $post->save();
+    
+        $post->increment('views');
+    
         return view('posts.show_public', [
             'post' => $post,
             'user' => $user,
@@ -131,6 +156,7 @@ class PostController extends Controller
             'bottomButtonAd' => $bottomButtonAd,
         ]);
     }
+    
 
     public function checkPassword(Request $request, $user_slug, $short_link,)
     {

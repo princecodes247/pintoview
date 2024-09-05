@@ -109,6 +109,19 @@ class SubscriptionController extends Controller
         return redirect()->route('subscription.index')->with('success', 'Subscription created successfully.');
     }
 
+    public function startPremium()
+    {
+        $user = User::where('id', auth()->id())->firstOrFail();
+        $subscription = $this->createSubscription('Premium', 1, $user->id);
+
+        if (!$subscription) {
+            return redirect()->route('subscription.index')->with('error', 'You already have an active subscription.');
+        }
+        $user->eligible_for_trial = false; 
+        $user->save();
+        return redirect()->route('subscription.index')->with('success', 'Subscription created successfully.');
+    }
+
     public function cancel(Subscription $subscription)
     {
         // $this->authorize('cancel', $subscription);
@@ -152,7 +165,7 @@ class SubscriptionController extends Controller
         return Subscription::create([
             'user_id' => $userId,
             'plan_name' => ucfirst($planName),
-            'amount' => strtolower($planName) === 'trial' ? 0 : $this->calculateAmount($planName, $durationInMonths),
+            'amount' => strtolower($planName) === 'trial' ? 0 : $this->calculateAmount(strtolower($planName), $durationInMonths),
             'starts_at' => now(),
             'ends_at' => now()->addMonths($durationInMonths),
         ]);
@@ -161,7 +174,7 @@ class SubscriptionController extends Controller
     protected function calculateAmount(string $planName, int $durationInMonths)
     {
         // Example pricing logic, modify as needed
-        $basePrice = $planName === 'premium' ? 1000 : 0; // Base price in kobo for one month
+        $basePrice = $planName === 'premium' ? 100000 : 0; // Base price in kobo for one month
 
         return $basePrice * $durationInMonths;
     }
