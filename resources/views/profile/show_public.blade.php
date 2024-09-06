@@ -7,7 +7,7 @@
             <div class="mb-6">
                 <img src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}" class="rounded-full h-24 w-24 object-cover mx-auto mb-4">
                 <h1 class="text-2xl font-bold">{{ $user->name }}</h1>
-                <p class="text-gray-600">{{ $user->email }}</p>
+                {{-- <p class="text-gray-600">{{ $user->email }}</p> --}}
             </div>
 
             <!-- Social Links -->
@@ -55,6 +55,17 @@
                 </a>
             </div>
             @endif
+
+            <!-- Search Form -->
+            <div class="mt-6">
+                <form method="GET" action="{{ route('user.profile_public', ['user_slug' => $user->slug]) }}" class="flex gap-2 md:flex-row flex-col">
+                    <input type="text" name="search" value="{{ $searchQuery ?? '' }}" placeholder="Search posts..." class="w-full flex-1 p-2 border border-gray-200 rounded-lg" />
+                    <button type="submit" class="h-full px-6 bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700">
+                        {{ __('Search') }}
+                    </button>
+                </form>
+            </div>
+
         </div>
 
         <!-- Free Posts -->
@@ -73,6 +84,10 @@
                 </li>
                 @endforeach
             </ul>
+
+            <div class="mt-6">
+            {{ $freePosts->links() }}
+            </div>
             @endif
         </div>
 
@@ -92,6 +107,9 @@
                 </li>
                 @endforeach
             </ul>
+               <div class="mt-6">
+            {{ $lockedPosts->links() }}
+            </div>
             @endif
         </div>
     </div>

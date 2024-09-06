@@ -33,29 +33,36 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Default post theme updated successfully.');
     }
 
-    public function profile($username)
+    public function profile(Request $request, $username)
     {
         $user = User::where('slug', $username)->firstOrFail();
 
         if ($user->custom_domain) {
             return redirect()->to($user->custom_domain);
         }
+  // Get the search query if it exists
+  $searchQuery = $request->input('search');
 
         // Fetch free posts (without a password)
         $freePosts = Post::where('user_id', $user->id)
             ->whereNull('password')
+            ->when($searchQuery, function($query, $searchQuery) {
+                return $query->where('title', 'like', "%{$searchQuery}%");
+            })
             ->orderBy('created_at', 'desc')
-            ->limit(10)
-            ->get();
+            ->paginate(10);
 
         // Fetch locked posts (with a password)
         $lockedPosts = Post::where('user_id', $user->id)
             ->whereNotNull('password')
+            ->when($searchQuery, function($query, $searchQuery) {
+                return $query->where('title', 'like', "%{$searchQuery}%");
+            })
             ->orderBy('created_at', 'desc')
-            ->limit(10)
-            ->get();
+            ->paginate(10);
 
-        return view('profile.show_public', compact('user', 'freePosts', 'lockedPosts'));
+
+        return view('profile.show_public', compact('user', 'freePosts', 'lockedPosts', 'searchQuery'));
     }
 
     public function update(Request $request)
