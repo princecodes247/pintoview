@@ -57,15 +57,25 @@
             @endif
 
             <!-- Search Form -->
-            <div class="mt-6">
+            {{-- <div class="mt-6">
                 <form method="GET" action="{{ route('user.profile_public', ['user_slug' => $user->slug]) }}" class="flex gap-2 md:flex-row flex-col">
                     <input type="text" name="search" value="{{ $searchQuery ?? '' }}" placeholder="Search posts..." class="w-full flex-1 p-2 border border-gray-200 rounded-lg" />
                     <button type="submit" class="h-full px-6 bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700">
                         {{ __('Search') }}
                     </button>
                 </form>
-            </div>
+            </div> --}}
 
+{{-- Find by PIN form --}}
+<div class="mt-6">
+    <form method="GET" action="{{ route('user.profile_public', ['user_slug' => $user->slug]) }}" class="flex gap-2 md:flex-row flex-col">
+        @csrf
+        <input type="text" name="pin" value="{{ old('pin') }}" placeholder="Enter post password..." class="w-full flex-1 p-2 border border-gray-200 rounded-lg" />
+        <button type="submit" class="h-full px-6 bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700">
+            {{ __('Find Post') }}
+        </button>
+    </form>
+</div>
         </div>
 
         <!-- Free Posts -->

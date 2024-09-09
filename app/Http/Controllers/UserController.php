@@ -43,6 +43,26 @@ class UserController extends Controller
   // Get the search query if it exists
   $searchQuery = $request->input('search');
 
+        $pin = $request->input('pin');
+
+        // Check if the pin is provided
+        if ($pin) {
+            // Fetch the latest post with the provided password (pin)
+            $lockedPost = Post::where('user_id', $user->id)
+                ->where('password', $pin)
+                ->orderBy('created_at', 'desc')
+                ->first();
+
+            // Check if the post exists and return it to the view
+            if ($lockedPost) {
+                $request->session()->put('post_' . $lockedPost->id . '_access_granted', true);
+                return redirect()->route('posts.show_public', ['user_slug' => $user->slug, 'short_link' => $lockedPost->short_link]);
+            } else {
+                return redirect()->back()->with('error', 'No post found with the provided password.');
+            }
+        } 
+
+
         // Fetch free posts (without a password)
         $freePosts = Post::where('user_id', $user->id)
             ->whereNull('password')
