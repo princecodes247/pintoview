@@ -35,7 +35,7 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/dashboard', [PostController::class, 'index'])->name('dashboard');
-  
+
     Route::get('posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::post('posts/store', [PostController::class, 'store'])->name('posts.store');
     Route::get('posts/settings', [UserController::class, 'settings'])->name('posts.settings');
@@ -45,7 +45,7 @@ Route::middleware([
     Route::post('posts/{id}/update', [PostController::class, 'update'])->name('posts.update');
     Route::put('posts/{id}/update', [PostController::class, 'update'])->name('posts.update');
     Route::delete('posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
- 
+
     Route::post('/profile',  [UserController::class, 'update'])->name('profile.update');
 
     Route::get('/subscriptions', [SubscriptionController::class, 'index'])->name('subscription.index');
@@ -87,5 +87,5 @@ Route::middleware([
     Route::get('/{user_slug}',  [UserController::class, 'profile'])->name('user.profile_public');
 });
 
-    Route::get('/{user_slug}/{short_link}', [PostController::class, 'showPublic'])->name('posts.show_public');
-    Route::post('{user_slug}/{short_link}/password', [PostController::class, 'checkPassword'])->name('posts.check_password');
+Route::get('/{user_slug}/{short_link}', [PostController::class, 'showPublic'])->name('posts.show_public');
+Route::post('{user_slug}/{short_link}/password', [PostController::class, 'checkPassword'])->name('posts.check_password');

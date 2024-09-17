@@ -3,10 +3,10 @@
 
 <head>
     <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title') - {{ config('app.name', 'Laravel') }}</title>
+    <title>Home</title>
 
 
     <!-- Fonts -->
@@ -18,11 +18,11 @@
 </head>
 
 <body class="bg-white dark:bg-white">
-  <x-landing.header/>
-    <div class="font-sans text-gray-900 antialiased">
+    <x-landing.header />
+    <div class="font-sans antialiased text-gray-900">
         {{ $slot }}
     </div>
-  <x-landing.footer/>
+    <x-landing.footer />
 </body>
 
 </html>
