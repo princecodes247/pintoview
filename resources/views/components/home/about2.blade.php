@@ -10,12 +10,10 @@
       </div>
 
       <div class="lg:py-24">
-        <h2 class="text-3xl font-bold sm:text-4xl">Lorem ispum dolor</h2>
+        <h2 class="text-3xl font-bold sm:text-4xl">Effortless Creation, Limitless Possibilities</h2>
 
         <p class="mt-4 text-gray-600">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut qui hic atque tenetur quis
-          eius quos ea neque sunt, accusantium soluta minus veniam tempora deserunt? Molestiae eius
-          quidem quam repellat.
+          Create stunning posts that resonate with your audience. Customize everything with our easy-to-use editor, set your pricing, and start earning. It's that simple!
         </p>
 
         <a

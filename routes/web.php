@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BannerAdController;
 use App\Http\Controllers\ButtonAdController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmbedCodeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SubscriptionController;
@@ -23,6 +24,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/about-us', function () {
+    return view('about');
+});
+
+
+Route::get('/contact-us', function () {
+    return view('contact');
+});
+Route::post('/contact-us', [ContactController::class, 'submitForm'])->name('contact.submit');
 
 Route::get('/pricing', [SubscriptionController::class, 'pricing'])->name('pricing.index');
 

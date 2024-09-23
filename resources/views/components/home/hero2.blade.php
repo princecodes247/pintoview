@@ -1,4 +1,4 @@
-<section class="relative flex flex-col min-h-screen">
+<section class="relative flex flex-col min-h-[600px]">
     <div class="absolute inset-0 blur-xl h-full" style="background: linear-gradient(143.6deg, rgb(138 132 252 / 0%) 20.79%, rgb(121 124 249 / 26%) 40.92%, rgb(171 188 238 / 0%) 70.35%)"></div>
     <div class="relative">
 
@@ -17,13 +17,15 @@
                     </p>
                 </a>
                 <h1 class="text-center max-w-md md:max-w-3xl text-3xl md:text-4xl tracking-tighter mr-auto lg:text-6xl font-geist  font-normal  text-transparent bg-clip-text bg-[linear-gradient(180deg,_#000_0%,_rgba(255,_255,_255,_0.00)_202.08%)] leading-0 md:leading-0 md:pb-0 mt-1">
-                    {{-- Create pages that you can monetize Instantly --}}
-                    Create pages you can instantly monetize
+                    Create pages that you can monetize 
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-[#36d1dc] to-[#5b86e5]">Instantly</span>
+
+
+                    {{-- Create posts that convert in an instant. --}}
                 </h1>
-                {{-- <p class="text-center">
-                    Sed ut perspiciatis unde omnis iste natus voluptatem accusantium
-                    doloremque laudantium, totam rem aperiam, eaque ipsa quae.
-                </p> --}}
+                <p class="text-center text-gray-600">
+                                Empower your content and generate revenue with our powerful platform. Share your ideas, set up ads, or create premium posts and watch your audience grow.
+                            </p>
                 <div class="flex items-center gap-x-3 sm:text-sm">
                     <a href="{{ route('login') }}" class="flex items-center justify-center gap-x-1 py-3 px-4 bg-blue-600 text-white font-medium transform-gpu dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#8686f01f_inset] rounded-full md:inline-flex">
                         Get started

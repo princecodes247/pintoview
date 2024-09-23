@@ -1,5 +1,5 @@
 <section class="bg-gray-50">
-  <div class="mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:h-screen lg:items-center">
+  <div class="mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:items-center">
     <div class="mx-auto max-w-xl text-center">
       <h1 class="text-3xl font-extrabold sm:text-5xl">
         Lorem ispum dolor.

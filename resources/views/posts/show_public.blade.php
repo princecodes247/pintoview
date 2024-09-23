@@ -7,7 +7,7 @@
 <x-guest-layout :theme="$user->default_post_theme">
     <div class="container mx-auto p-6 max-w-4xl mt-8">
         @if (isset($headerBannerAd))
-        <a href="{{ route('banner-ads.redirect', $headerBannerAd->id) }}" class="max-w-[728px] flex justify-center mx-auto">
+        <a href="{{ route('banner-ads.redirect', $headerBannerAd->id) }}" class="max-w-[728px] flex justify-center mx-auto bancover">
             <img src="{{ $headerBannerAd->image }}" alt="{{ $headerBannerAd->title }}" class="w-full h-full object-contain hidden md:block">
             <img src="{{ $headerBannerAd->mobile_image }}" alt="{{ $headerBannerAd->title }}" class="object-contain block md:hidden">
         </a>
@@ -32,9 +32,21 @@
             @if($post->view_limit !== null)
             <p class="mt-2 text-red-400">Views left: {{ $post->view_limit - $post->views }}</p>
             @endif
-
-            <div class="prose lg:prose-xl w-full wrapCont post-content mt-6">
+<div id="dl-btn-wrapper">
+                        <div class="ad-slot">
+            <div class="prose lg:prose-xl w-full wrapCont promo-block post-content mt-6">
                 {!! $post->content !!}
+            </div>
+              </div>
+                                </div>
+           <div class="aab-hide aab-message">
+                <div class="warning-msg bg-yellow-400 p-4 text-black">
+                    <center>
+                        <b><b style="color: red"><i class="fa fa-close"></i></b>
+                            If you did not see the content, <b style="color: red">kindly turn off "your ad-blocker" / "Data Savings"</b>
+                            or try a different Browser like "Firefox Browser". After turning it off, reload page.</b><br/>
+                    </center>
+                </div>
             </div>
             @if($bottomButtonAd)
             <div class="flex flex-wrap justify-center gap-4 mt-6">
@@ -52,6 +64,8 @@
             <img src="{{ $footerBannerAd->image }}" alt="{{ $footerBannerAd->title }}" class="w-full h-full object-contain hidden md:block">
             <img src="{{ $footerBannerAd->mobile_image }}" alt="{{ $footerBannerAd->title }}" class="w-full h-full object-contain block md:hidden">
         </a>
+
+      
         @endif
     </div>
     <script>
@@ -75,6 +89,8 @@
                     }
                 }, 1000);
             }
+
+           
         });
 
     </script>
